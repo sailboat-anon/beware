@@ -1,0 +1,20 @@
+{% extends 'Page_template.html' %}
+{% block title%}{{art.title}}{% endblock title%}
+
+{% block content%}
+<style>
+iframe {
+    margin: 0px auto;
+    display: block;
+}
+body {color: white;}
+</style>
+<body style="background-color: {{art.bg_color}}; {% if art.bg_img %} background-image: url('{{art.bg_img.url}}'); {% endif %}">
+<div style="max-width: 90%; display: block; margin: 0px auto;">
+    <div style="text-align: center; margin-bottom: 0px;"><h1 style="margin: 0 0; margin-top: 17px;">{{art.title}}</h1><p style="margin-top: 0px; padding-top: 0px">by @<a href="/@{{art.author.username}}">{{art.author.username}}</a></p></div>
+{% if art.image %} 
+<img style="max-width: 100%; height: auto; margin: 0px auto; display:block;" src="{{art.image.url}}"/>
+{% endif %}
+{{art.text|safe}}
+</div>
+{%endblock content%}

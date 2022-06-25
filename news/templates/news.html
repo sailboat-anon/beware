@@ -1,0 +1,116 @@
+{% extends 'Page_template.html' %}
+{% load static %}
+{%block title%}News {% endblock title%}
+{% block content %}
+<head>
+<style>
+.container{
+width: 999px;
+    display: flex;
+flex-direction: row;
+justify-content: left;}
+.flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+.headline {
+    width: 444px;
+    background-color: rgba(0,0,0,0.314);
+    border-radius: 13px;
+    padding: 15px 15px;
+    margin-top: 17px;
+    text-align: left;}
+.box {
+    background-color: rgba(0,0,0,0.314);
+    border-radius: 13px;
+    padding: 13px 13px;
+    margin-top: 12px;
+    text-align: left;
+}
+.bbox {
+    transition: all 0.666s;
+    background-color: rgba(0,0,0,0.666);
+    border-radius: 13px;
+    overflow:hidden;
+    border: 1px solid rgba(216,216,216,0.216);
+}
+.bbox img {
+    border-bottom: 1px solid rgba(216,216,216,0.216);
+    margin-top: 0px; padding-top: 0px;
+}
+.bbox p {
+    padding: 6px 8px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+}
+.bbox:hover {
+    background-color: rgba(216,216,216,0.121);
+    cursor: pointer;
+}
+.articles {
+    margin-left: 17px;
+    width: 555px;
+}
+.link{
+    transition: all 0.216s;
+    margin-top: 6px; 
+    border-top: 1px solid rgba(216,216,216,0.121);
+}
+.link:hover {
+    background-color: rgba(216,216,216,0.121);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 942px) {
+.container {max-width: 100%; display: block;}
+.headline {width: auto; max-width: 100%; margin: 18px 12px;}
+.articles {width: auto; max-width: 100%; margin: 12px 12px;}
+
+}
+.author{
+    color: rgb(216,216,216);
+}
+.author:hover{
+    color: white;
+    text-decoration: underline;
+}
+</style>
+</head>
+<body class="gallery">
+<center>
+<div class="container">
+    <div class="headline">
+    <h1 style="margin-top: -6px; margin-bottom: 0px; padding-bottom: 0px;">Headlines</h1>
+    <p style="margin-top: 0px; padding-top: 0px; margin-bottom: 2px; ">From the web</p>
+        <div class="bbox" onclick="window.open('{{headline.link}}');" style="margin-bottom: 12px;">
+            <img src="{{headline.image.url}}" width="100%" height="auto"/>
+            <p style="margin-bottom: 0px; padding-bottom: 0px; margin-top: 2px; padding-top: 0px;">{{headline.title}}</p>
+            <p style="font-size: 12px; color: rgb(216,216,216); margin: 0px 8px; margin-top: -8px; padding: 0px 0px; float: right;">{{headline.via}}</p>
+        </div>
+        {% for l in links %}
+            <div class="link" onclick="window.open('{{l.link}}');">
+            <p style="margin-left: 6px; margin-top: 6px; margin-bottom: 0px; padding-bottom: 0px; line-height: 18px;"><b>{{l.title}}</b></p>
+            <p style="font-size: 14px; margin-left: 18px; margin-top: 2px; color: rgb(216,216,216); margin-bottom: 0px; padding-bottom: 10px; line-height: 16px;">{{l.description}}</p>
+            <p style="font-size: 12px; color: rgb(216,216,216); margin-top: -18px; padding: 0px 0px; margin-right: 6px; float: right;">{{l.via}}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="box articles" style="">
+    <h1 style="margin-top: -6px; margin-bottom: 0px; padding-bottom: 0px;">Articles</h1>
+    <p style="margin-top: 0px; padding-top: 0px; margin-bottom: 0px; padding-bottom: 0px;">From users like you</p>
+    {% for a in arts %}
+    <div class="box flex">
+    <img src="/media/{{a.image}}" style="width: 54px; height: 54px; object-fit: cover;"/>
+    <div style="margin: 0px 0px;">
+    <p style="margin-left: 17px; margin-top: 0px; text-align: left; margin-bottom: 0px; padding-bottom: 0px; padding-top: 0px; color: rgb(216,216,216);"><b style="color: white;">{{a.title}} </b> by <a class="author" href="/@{{a.author.username}}">@{{a.author.username}}</a></p>
+    <p style="font-size: 14px; color: rgb(216,216,216); margin-top: 0px; padding-top: 0px; margin-left: 17px; margin-bottom: 0px; padding-bottom: 0px; line-height: 18px;">{{a.preview}}</p></div>
+    </div>
+    {% endfor%}
+
+    </div>
+
+</div></center>
+    
+
+{% endblock content %}

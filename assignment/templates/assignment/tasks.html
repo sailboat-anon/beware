@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Browse Assignments{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static '/assets/beware.css' %}">
+{% endblock head %}
+{% block content %}
+<div id="container">
+<div id="main">
+  {% for t in tasks %}
+  {% if t.public == True %}
+  <div class="task_box" onclick=>
+    <div class="task_title">
+      <h3>{{ t.name }}</h3>
+    </div>
+    <div class="task_description">
+      <p>{{ t.summary }}</p>
+    </div>
+    <div class="task_info">
+      <p>{{t.location}} - {{ t.due_date }}</p>
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>`
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Account Dashboard{% endblock title %}
+
+{% block content %}
+<head>
+<style>
+
+
+
+.dashboard {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1250px;
+}
+.dashboardimg {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px; 
+    text-align: center;
+    overflow:hidden;
+    width: 1250px;
+    height: 432px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-bottom-left-radius: 10px; 
+    border-bottom-right-radius: 10px; 
+}
+
+.profileimg {
+    border-radius: 50%;
+    background: NONE;
+    height: 166px;
+    width: 166px; 
+    margin-left: 54px;
+    margin-top: -74px;
+    display: flex;
+    justify-content: center;
+}
+.name{position: relative;
+font-size: 26px; 
+margin-left: 228px;
+margin-top: -120px;
+color: {{user.profile.text_color}};}
+.bio{padding-top: 0px; font-size: 16px; margin-top: -30px; width: 700px; word-wrap: normal; height: 54px;}
+.bio p {margin-top: 0px; color: {{user.profile.text_color}};}
+
+
+.name p a {text-decoration: none;}
+.name p a:hover {text-decoration: underline;}
+.navbar { margin-top: -10px;
+  position: relative; 
+  text-align: center; 
+  justify-content: center;
+  background-color: rgba(228,228,228,0);}
+.navbar ul li {
+        display:inline-block;
+        padding-left: 10px;
+        padding-right: 10px; 
+        *display:inline; /*IE7*/
+        *zoom:1; /*IE7*/
+        color: {{user.profile.text_color}};
+}
+.navbar ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  text-align: center; 
+  justify-content: center;
+}
+.navbar ul li a {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  font-size: 26px;
+  color: {{user.profile.text_color}};
+  transition: 0.5s;
+}
+.navbar ul li a::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 3px;
+  top: 100%;
+  left: 0;
+  background: {{user.profile.accent_color}};
+  transition: transform 0.5s;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+.navbar ul li a:hover {
+  color: {{user.profile.accent_color}};
+}
+.navbar ul li a:hover::after {
+  transform: scaleX(1);
+  transform-origin: center;
+}
+.counter {
+  padding-top: 0px;
+  margin-top: -54px;
+  z-index: 0;
+  font-size: 14px;
+  justify-content: center;
+  text-align: center;
+  padding-right: 17px;
+  padding-left: 17px;
+  background-color: RGBA(0,0,0,0);
+}
+</style>
+</head>
+<body class="gallery" style="background-image: url('{{user.profile.bg}}'); color: {{user.profile.text_color}};">
+<div class="dashboard">
+    <div class="dashboardimg">
+        <img src="{{ user.profile.image }}" style="width:100%; height: auto;"/>
+    </div>
+    <div class="profileimg">
+        <img src="{{user.profile.photo}}" style="margin: auto; border-radius: 50%; height: 154px; width: 154px; margin: auto;"/>
+    </div>
+    <div class="name">
+        <p>{{user.profile.display_name}} <a href="{{user.profile.website}}" style="color: {{user.profile.accent_color}}; font-size: 22;"> @{{user.username}}</a></p>
+        <div style="display: flex; flex-direction: row;">
+           <div class="bio">
+                <p>{{user.profile.bio}}</p>
+            </div>
+            <div class="counter"><p style="color: {{user.profile.accent_color}};">{{user.profile.followers.count}}</p><p>Posts</p></div>
+            <div class="counter"><p style="color: {{user.profile.accent_color}};">{{user.profile.followers.count}}</p><p>Followers</p></div>
+            <div class="counter"><p style="color: {{user.profile.accent_color}};">{{user.profile.following.count}}</p><p>Following</p></div>
+        </div>
+    </div>
+      <div class="navbar">
+  <ul>
+    <li><a href="#">Posts</a></li>
+    <li><a href="#">Images</a></li>
+  </ul>
+  </div>
+</div>
+
+{% endblock content %}

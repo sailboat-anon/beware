@@ -1,0 +1,75 @@
+{% extends "Page_template.html" %}
+{% block title %}Register{% endblock title %}
+{% block keywords %}Beware, Media, Register, Registration, Social Media, Alternative, Social, Media{% endblock keywords %}
+{% block description %}Beware Media Registration Page{% endblock description %}
+{% block content %}
+        
+<style>
+    label{display: inline-block; width: 100%;}
+    form{float: left; }
+    input{display: inline-block; position: relative; }
+    textarea{display: inline-block; position: relative; }
+
+ul{font-family: Consolas, monaco, monospace;
+list-style: none;
+
+}
+p {color: black;}
+</style>
+
+<center><div id="content-desktop-block" style="margin-top: 33px; width: 700px; background-color: white; border: 2px solid black;">
+    <div style="background-color: black; margin: 2px; padding:3px; height: 24px;">
+    <h1 style="text-align: center; margin: 0; padding: 0; padding-left: 4px; color: white;">Registration Form</h1></div>
+
+{% if user_form.errors %}
+    {% for key, value in form.errors.items %}
+                <p>
+                    {{ key }}:{{ value }}
+                </p>
+    {% endfor %}
+{% endif %}
+
+{% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+{% endif %}
+
+    <div style="display: inline-block;">
+        <form method="post">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            <hr>    <p style="padding-top: 16px; width: 90%">By clicking below you hereby agree to our <a href="{% url 'tos' %}">Terms</a> Agreement
+            <br><br><b>Beware respects your privacy and will not use your information for any purposes outside of Beware operatons.<b></p>
+            <div class="form-actions" style="margin-bottom: 33px; margin-top: 33px; ">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+</div></center>
+<div style="height: 33px; margin: 0"></div>
+
+<center><div id="content-mobile-block" style="width: 90%; background-color: white; border: 2px solid black;">
+    <div style="background-color: black; margin: 2px; padding:3px; height: 24px;">
+    <h3 style="text-align: center; margin: 0; padding: 0; padding-left: 4px; color: white;">Operative Application Form</h3></div>
+    <div style="display: inline-block;">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+                <hr>    <p style="padding-top: 16px; width: 90%">By clicking below you hereby agree to our <a href="{% url 'agreement' %}">Terms of Service</a> Agreement
+            <br><br><b>Beware respects your privacy and will not use your information for any purposes outside of Beware operatons.<b></p>
+            <div class="form-actions" style="margin-bottom: 33px; margin-top: 33px; ">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+</div></center>
+<div style="height: 33px; margin: 0"></div>
+
+
+
+<script>
+document.getElementById("about").innerHTML="";
+document.getElementById("contact").innerHTML="";
+</script>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "Page_template.html" %}
+
+{% block title %}Logout{% endblock %}
+
+{% block content %}
+    <head><meta http-equiv="refresh" content="1.5;url=/home" /></head>
+<center>
+<h1>Logged out</h1>
+</center>
+
+<script>
+    document.getElementById("about").innerHTML="";
+document.getElementById("contact").innerHTML="";
+</script>
+
+{% endblock content%}
+
+<!-- TODO: redirect to homepage -->

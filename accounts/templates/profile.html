@@ -1,0 +1,609 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}@{{profile.display_name}} {% endblock title %}
+
+{% block content %}
+<head>
+<style>
+
+  .sidebar{position: fixed;
+    right: 50%;
+    margin-right: 345px; 
+    background-color: rgba(228,228,228,0.1);
+    height: 365px;
+    width: 220px;
+    display: none;
+}
+#main {
+    display: block; 
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    width: 666px;
+    margin-bottom: 33px; 
+}
+.postform {backdrop-filter: blur(1px);
+    margin-top: 17px; 
+    background-color: rgba(0,0,0,0.228);
+    width: 666px;
+    border-radius: 9px;
+    border-color: rgba(54,54,54, 0.33);
+    padding-bottom: 17px;
+}
+
+.post {backdrop-filter: blur(1px);
+    margin-top: 17px;
+    margin: 0;
+    background-color: rgba(0,0,0,0.228);
+    width: 666px;
+    border-radius: 9px;
+    border-color: rgba(54,54,54, 0.33);
+    padding-bottom:0px;
+}
+#postform button {margin-top: 0px;
+    font-size: 16px; 
+    float: right;
+    color: grey;
+    position: relative;
+}
+#postform button:hover {
+    font-size: 16px; 
+    cursor: pointer;
+    color: white;
+    text-decoration: underline;
+}
+.cipher {
+    border: none;
+    outline: none;
+    background-color: rgba(0,0,0,0.666);
+    border-radius: 7px;
+    padding-left: 7px;
+    padding-top: 5px;
+    padding-bottom: 7px;
+    color: white;
+}
+#ciphersp {
+    margin-left: 56px;
+    margin-top: -30px;
+}
+.cipher select {
+    background-color: rgba(228,228,228,0.1);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 2px;
+    color: white;
+}
+
+#postbutton {background-color: rgba(0,0,0,0.666); 
+padding-left: 7px;
+padding-right: 7px;
+padding-top: 3px;
+padding-bottom: 3px;
+border: none; 
+border-radius: 5px;
+outline: none;
+margin-right: 7px;
+}
+#postbutton:hover {
+    background-color: rgba(54,54,54,0.666); 
+}
+
+.displayname a {text-decoration: none;}
+.displayname a:hover {text-decoration: underline;}
+
+.reply{border-top: 1px solid rgba(216,216,216,0.216); display: none; flex-direction: row; flex-wrap: wrap; width: 100%; margin-bottom: 0px; padding-bottom: 0px; height: auto;}
+.reply button {color: white; border: none; background-color: rgba(216,216,216,0); border-radius: 7px; margin-left: auto; margin-top: 6px; margin-right: 6px; margin-bottom:6px;}
+.reply button:hover {
+    cursor: pointer;
+    background-color: rgba(216,216,216,0.216);
+}
+.reply textarea{background-color: rgba(0,0,0,0.666); color: white; width: inherit; border-radius: 7px; font-size: 16px; border: none; padding: 8px; margin: 6px 6px; height: 36px; resize: none;}
+.reply textarea:focus{
+    outline: none;
+}
+.truncate {
+ display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical; 
+  width: 600px;
+  overflow: hidden;
+}
+.post_content {
+    border-bottom: 1px solid rgba(216,216,216,0.121);
+    margin-right: 17px;
+    margin-left: 17px;
+}
+.postactions{
+    display: flex; flex-direction: row; width: 100%;
+}
+.postactions p {
+    margin: 0px;
+    padding: 0px;
+}
+.postactions a {
+    margin: 4px 0px;
+    text-align:center;
+    justify-content: center;
+}
+.postactions a img{
+    margin-top: 6px;
+    padding: 0px 8px;
+}
+.postactions a:hover {
+    background-color: rgba(216,216,216,0.121);
+    border-radius: 5px; 
+}
+.reply_button{
+    display: flex; flex-direction: row;
+        padding: 10px 22px;
+        margin: 4px 8px;
+}
+.reply_button p {
+        margin: auto;
+        margin-left: 6px;
+        padding-top: 0px;
+}
+.reply_button:hover {
+    background-color: rgba(216,216,216,0.121);
+    border-radius: 5px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.post_score {
+border-radius: 5px;
+margin: auto;
+}
+.post_score p{
+    padding: 2px 4px;
+}
+.voting a img {
+    opacity: 0.5;
+}
+.readMore:hover {text-decoration: underline;
+cursor: pointer}
+.name{position: relative;
+font-size: 26px; 
+margin-left: 228px;
+margin-top: -120px;
+color: {{profile.text_color}};}
+.bio{padding-top: 0px; font-size: 16px; margin-top: -30px; width: 700px; word-wrap: normal; height: 54px;}
+.bio p {margin-top: 0px; color: {{profile.text_color}};}
+
+
+.name p a {text-decoration: none;}
+.name p a:hover {text-decoration: underline;}
+.navbar { margin-top: -10px;
+  position: relative; 
+  text-align: center; 
+  justify-content: center;
+  background-color: rgba(228,228,228,0);}
+.navbar ul li {
+        display:inline-block;
+        padding-left: 10px;
+        padding-right: 10px; 
+        *display:inline; /*IE7*/
+        *zoom:1; /*IE7*/
+        color: {{profile.text_color}};
+}
+.navbar ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  text-align: center; 
+  justify-content: center;
+}
+.navbar ul li a {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  font-size: 26px;
+  color: {{profile.text_color}};
+  transition: 0.5s;
+}
+.navbar ul li a::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 3px;
+  top: 100%;
+  left: 0;
+  background: {{profile.accent_color}};
+  transition: transform 0.5s;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+.navbar ul li a:hover {
+  color: {{profile.accent_color}};
+}
+.navbar ul li a:hover::after {
+  transform: scaleX(1);
+  transform-origin: center;
+}
+.counter {
+  padding-top: 0px;
+  margin-top: -54px;
+  z-index: 0;
+  font-size: 14px;
+  justify-content: center;
+  text-align: center;
+  padding-right: 17px;
+  padding-left: 17px;
+  background-color: RGBA(0,0,0,0);
+}
+.dashboard {
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+}
+.dashboardimg {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px; 
+  text-align: center;
+  overflow:hidden;
+  width: 95%;
+  height: 333px;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  border-bottom-left-radius: 10px; 
+  border-bottom-right-radius: 10px; 
+}
+
+.profileimg {
+  border-radius: 50%;
+  background: NONE;
+  height: 166px;
+  width: 166px; 
+  margin-left: 54px;
+  margin-top: -74px;
+  display: flex;
+  justify-content: center;
+}
+.name{position: relative;
+font-size: 26px; 
+margin-left: 228px;
+margin-top: -120px;
+color: {{user.profile.text_color}};}
+.bio{padding-top: 0px; font-size: 16px; margin-top: -30px; width: 700px; word-wrap: normal; height: 54px;}
+.bio p {margin-top: 0px; color: {{user.profile.text_color}};}
+
+
+.name p a {text-decoration: none;}
+.name p a:hover {text-decoration: underline;}
+.navbar { margin-top: -10px;
+position: relative; 
+text-align: center; 
+justify-content: center;
+background-color: rgba(228,228,228,0);}
+.navbar ul li {
+      display:inline-block;
+      padding-left: 10px;
+      padding-right: 10px; 
+      *display:inline; /*IE7*/
+      *zoom:1; /*IE7*/
+      color: {{user.profile.text_color}};
+}
+.navbar ul {
+display: flex;
+flex-direction: row;
+list-style-type: none;
+text-align: center; 
+justify-content: center;
+}
+.navbar ul li a {
+display: block;
+position: relative;
+text-decoration: none;
+font-size: 26px;
+color: {{user.profile.text_color}};
+transition: 0.5s;
+}
+.navbar ul li a::after {
+position: absolute;
+content: "";
+width: 100%;
+height: 3px;
+top: 100%;
+left: 0;
+background: {{user.profile.accent_color}};
+transition: transform 0.5s;
+transform: scaleX(0);
+transform-origin: center;
+}
+.navbar ul li a:hover {
+color: {{user.profile.accent_color}};
+}
+.navbar ul li a:hover::after {
+transform: scaleX(1);
+transform-origin: center;
+}
+.counter {
+padding-top: 0px;
+margin-top: -54px;
+z-index: 0;
+font-size: 14px;
+justify-content: center;
+text-align: center;
+padding-right: 17px;
+padding-left: 17px;
+background-color: RGBA(0,0,0,0);
+}
+</style>
+</head>
+<body class="gallery" style="background-image: url('{{profile.bg}}'); color: {{profile.text_color}};">
+<div class="dashboard">
+    <div class="dashboardimg" style="text-align: center; justify-content: center;">
+        <img src="{{ profile.image }}" style="height: auto; margin-left: auto;"/>
+    </div>
+    <div class="profileimg">
+        <img src="{{profile.photo}}" style="margin: auto; border-radius: 50%; height: 154px; width: 154px; margin: auto;"/>
+    </div>
+    <div class="name">
+        <p>{{profile.display_name}} <a href="{{profile.website}}" style="color: {{profile.accent_color}}; font-size: 22;"> @{{profile.user.username}}</a></p>
+        <div style="display: flex; flex-direction: row;">
+           <div class="bio">
+                <p>{{profile.bio}}</p>
+            </div>
+            <div class="counter"><p style="color: {{profile.accent_color}};">{{profile.followers.count}}</p><p>Posts</p></div>
+            <div class="counter"><p style="color: {{profile.accent_color}};">{{profile.followers.count}}</p><p>Followers</p></div>
+            <div class="counter"><p style="color: {{profile.accent_color}};">{{profile.following.count}}</p><p>Following</p></div>
+        </div>
+    </div>
+  <div class="navbar">
+  <ul>
+    <li><a href="#">Posts</a></li>
+    <li><a href="#">Images</a></li>
+  </ul>
+  </div>
+  <center><div id="_Posts" style="display: block;">
+    {% for p in posts %}
+    {% if p.cipher %}
+    <div class="post" style="background-color: {{p.cipher.color}}16;">
+    {% else %}
+    <div class="post" style="">
+    {% endif %}
+        <div class="posttitle" style="display: flex;"><div class="displayname" style="display: flex;">
+        <a class="display" href="/@{{p.author}}" style="display: flex;"><img src="{{p.author.profile.photo}}" height="42px;" style="border-radius: 50%; margin-left: 7px; margin-top: 7px;">
+        <p style="font-size: 16px; color:white; padding-top: 0px; margin-top: 6px; margin-left: 12px;"><b>{{p.author.profile.display_name}}</b></p></a></div>
+        <a href="/@{{p.author}}" style="text-decoration: none;"><p style="font-size: 16px; color:grey; padding-top: 0px; margin-top: 6px; margin-left: 6px;">@{{p.author}}</p></a>
+            <p style="font-size: 16px; color:grey; padding-top: 0px; margin-top: 6px; margin-left: 16px; padding-right: 17px;">{{p.date|age}}</p>
+        <div style="margin-left: auto;">        </div>
+        {% for v in p.values.all %}
+        {% if v.ciph in user.profile.ciphers %}
+        <p style="padding-top: 0px; margin-top: 6px; color: {{v.ciph.color}}; padding-right: 6px; margin-right: 6px;">{{v.num}}</p>
+        {%endif %}
+        {% endfor %}
+
+        </div>
+    <div class="post_content">
+        <p onclick="window.location.href = '/post/{{p.id}}';" class="demo" id="{{p.id}}" style="text-align: left;color: {{p.cipher.color}}; margin-left: 50px; margin-top: -22px; padding-top: 0px; padding-bottom: 2px;">{% if p.parent %}<a href='@{{p.parent.author.username}}' style="color: white;">@{{p.parent.author.username}}</a> {% endif %}{{p.content|linebreaksbr}}</p>
+        <button onclick="readmore('{{p.id}}');" id="button{{p.id}}" class="readMore btn" style="float: right; background: none; border: none; color: white; margin-top: -8px; padding-top:0px; margin-right: 6px;">Read More</button>
+    </div>
+    <div class="postactions">
+    <div class="reply_button" onclick="reply_reveal('{{p.id}}')"><img src="/static/assets/reply.png" height="18px" width="auto;"><p>{% if p.comments >= 1 %}{{p.comments}}{% endif %}</p></div>
+    <div class="voting" style="display: flex; flex-direction: row; margin-left: auto; margin-right: 6px;">
+        <a onclick="updoot('{{p.id}}');" style="cursor: pointer;">
+            <img id="upvote{{p.id}}" src="/static/assets/upvote{% for v in p.votes %}{% if v.user == request.user %}{% if v.value == True %}d{% endif %}{% endif %}{% endfor %}.png" height="26px;" width="auto;"/>
+        </a>
+        <div class="post_score">
+        {% if p.score >= 1 %}
+        <p id="ps{{p.id}}" style="color: red;">{{p.score}}</p>
+        {% elif p.score == 0 %}
+        <p id="ps{{p.id}}" style="color: grey;">{{p.score}}</p>
+        {% else %}
+        <p id="ps{{p.id}}" style="color: cyan;">{{p.score}}</p>
+        {% endif %}
+        </div>
+        <a onclick="downdoot('{{p.id}}')" style="cursor: pointer;">
+            <img id="downvote{{p.id}}" src="/static/assets/downvote{% for v in p.votes %}{% if v.user == request.user %}{% if v.value == False %}d{% endif %}{% endif %}{% endfor %}.png" height="26px;" width="auto;"/>
+        </a>
+        </div>
+    </div>
+    <form action="post/new" method="post" class="reply" id="pf{{p.id}}">
+    <div style="display: flex; flex-basis: 100%; height:auto; flex-direction: row;">
+    <img src="{{user.profile.photo}}" style="border-radius: 50%; height: 26px; width: 26px; padding-top: 10px; margin-left: 12px; margin-bottom: 0px; margin-right: 6px; margin-top: 0px;" />
+    <label class="cipher" style="width: auto; margin-top: 6px; padding-top: 0px;">Cipher:
+        <select name="cipher" style="margin-right: 5px; background-color: black; border-color: black; margin-top: 4px;">
+        <option value="None">None</option>
+            {% for c in user.profile.ciphers %}
+                <option value="{{c.name}}" style="color: {{c.color}}" {% if p.cipher.name == c.name%}selected{%endif%}>{{c.name}}</option>
+            {% endfor %}
+        </select></label>
+        {%if p.cipher %} <p style="color: {{p.cipher.color}}; padding: 0px 0px; height: auto; margin: auto; margin-left: 17px;">Your reply must equal {% for v in p.values.all %}{% if v.ciph.name == p.cipher.name %}{{v.num}}{%endif%}{%endfor%}</p>{%endif%}
+        <div style="margin: auto; background-color: rgba(0,0,0,0.216); border-radius: 5px; padding: 5px 5px;">
+        {% for cip in user.profile.ciphers %}
+        <a id="{{cip.name}}Val{{p.id}}" style="color: {{cip.color}}; margin-left: 6px; margin-right: 6px;"></a>
+        {% endfor %}</div>
+    </div>
+        <div style="display: flex; flex-direction: row; width: 100%">
+        <input type="hidden" name="parent" value="{{p.id}}">
+        <textarea id="rc{{p.id}}" name="content" oninput='rege("{{p.id}}"); this.style.height = ""; if (this.scrollHeight < 432) {this.style.height = this.scrollHeight + "px";} else {this.style.height = "432px";};' style="" placeholder="Reply"></textarea>
+        {% csrf_token %}
+        <button onclick="submit_reply()">Submit</button></div>
+        
+    </form>  
+    </div>
+    {% endfor %}
+  </div></center>
+  <div id="_Images" style="display: none; justify-content: center;">
+    {% for i in imgs %}
+    <div style="text-align: center; background-color: black; border-radius: 5px; width: 200px; overflow: hidden;">
+    <div class="image" style="background-image: url('/media/{{i.image}}'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 200px; height: 200px; margin: auto;"></div>
+      <p style="color: {{profile.accent_color}}; margin-bottom: 0px; margin-top: 6px;">{{i.subject}}</p>
+      <p style="color: {{profile.text_color}}; margin-top: 0px; padding-top: 0px;">{{i.comment}}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+{% for ciph in user.profile.ciphers %}
+<script>
+function {{ciph.name}}Gematria(impVal = "") {
+		var z = "";
+		var x = 0;
+		var g = 0;
+		for (x = 0; x < impVal.length; x++) {
+
+			z = impVal.slice(x, x + 1);
+
+			switch (z) {
+			{% for letter in ciph.symbols %}
+		        case "{{letter.char}}": g += {{letter.value}}; break;
+            {% endfor %}
+		   	}
+		}
+		return g
+	}
+</script>
+{% endfor %}
+<script>
+function rege(pID){
+    var txt = document.getElementById("rc"+pID).value;
+    {% for ciph in user.profile.ciphers %}
+    document.getElementById("{{ciph.name}}Val"+pID).innerHTML = {{ciph.name}}Gematria(txt);
+    {% endfor %}
+}
+</script>
+<script>var element = document.getElementById('content');
+element.addEventListener('input', function() {
+    var txt = element.value;
+    {% for c in user.profile.ciphers %}
+    document.getElementById("{{c.name}}Val").innerHTML = {{c.name}}Gematria(txt);
+    {% endfor %}
+
+});</script>
+<script>
+var textHolder = document.querySelector('.demo');
+var btn = document.querySelector('.btn');
+var elements = document.getElementsByClassName('demo')
+
+function toggleText() {
+    for (i = 0; i < elements.length; i++) {
+        if (elements[i].scrollHeight > 76){
+            elements[i].classList.toggle("truncate");
+        } else {
+            document.getElementById("button" + elements[i].id).style.display = "none";
+        }
+    } 
+}
+
+function readmore(classID){
+    var thisElem = document.getElementById("" + classID + "")
+    var thisButton = document.getElementById("button"+classID);
+    if (thisElem.classList.contains("truncate")) {
+        thisElem.classList.toggle("truncate");
+        thisButton.innerHTML = "Read Less";
+    } else {
+        thisElem.classList.toggle("truncate");
+        thisButton.innerHTML = "Read More"
+    }x
+}
+
+toggleText(); //to truncate at first time
+</script>
+
+<script>
+function updoot(postID) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200 && this.DONE) {
+            if (this.responseText != "failure") {
+                if (this.responseText == "new"){
+                    document.getElementById("upvote"+postID).src = "/static/assets/upvoted.png";
+                    document.getElementById("downvote"+postID).src = "/static/assets/downvote.png";
+                    var score = document.getElementById("ps"+postID);
+                    var num = parseInt(score.innerHTML);
+                    num = num + 1;
+                    score.innerHTML = String(num);
+                } else if (this.responseText == "revoked"){
+                    document.getElementById("upvote"+postID).src = "/static/assets/upvote.png";
+                    var score = document.getElementById("ps"+postID);
+                    var num = parseInt(score.innerHTML);
+                    num = num - 1;
+                    score.innerHTML = String(num);
+                } else if (this.responseText == "changed"){
+                    document.getElementById("upvote"+postID).src = "/static/assets/upvoted.png";
+                    document.getElementById("downvote"+postID).src = "/static/assets/downvote.png";
+                    var score = document.getElementById("ps"+postID);
+                    var num = parseInt(score.innerHTML);
+                    num = num + 2;
+                    score.innerHTML = String(num);
+                }
+            }
+
+        }
+        if (parseInt(document.getElementById("ps"+postID).innerHTML) >= 1) {
+            document.getElementById("ps"+postID).style = 'color: red;';
+        } else if (parseInt(document.getElementById("ps"+postID).innerHTML) <= -1) {
+            document.getElementById("ps"+postID).style = 'color: cyan;';
+        } else {
+            document.getElementById("ps"+postID).style = 'color: grey;';
+        }
+    }
+    xhr.open("POST","/post/vote", true);
+    xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send('number='+postID+"&value=True");
+}
+
+function downdoot(postID) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200 && this.DONE) {
+            if (this.responseText != "failure") {
+                if (this.responseText == "new"){
+                    document.getElementById("upvote"+postID).src = "/static/assets/upvote.png";
+                    document.getElementById("downvote"+postID).src = "/static/assets/downvoted.png";
+                    var score = document.getElementById("ps"+postID);
+                    var num = parseInt(score.innerHTML);
+                    num = num - 1;
+                    score.innerHTML = String(num);
+                } else if (this.responseText == "revoked"){
+                    document.getElementById("downvote"+postID).src = "/static/assets/downvote.png";
+                    var score = document.getElementById("ps"+postID);
+                    var num = parseInt(score.innerHTML);
+                    num = num + 1;
+                    score.innerHTML = String(num);
+                } else if (this.responseText == "changed"){
+                    document.getElementById("upvote"+postID).src = "/static/assets/upvote.png";
+                    document.getElementById("downvote"+postID).src = "/static/assets/downvoted.png";
+                    var score = document.getElementById("ps"+postID);
+                    var num = parseInt(score.innerHTML);
+                    num = num - 2;
+                    score.innerHTML = String(num);
+                }
+            }
+
+        }
+        if (parseInt(document.getElementById("ps"+postID).innerHTML) >= 1) {
+            document.getElementById("ps"+postID).style = 'color: red;';
+        } else if (parseInt(document.getElementById("ps"+postID).innerHTML) <= -1) {
+            document.getElementById("ps"+postID).style = 'color: cyan;';
+        } else {
+            document.getElementById("ps"+postID).style = 'color: grey;';
+        }
+    }
+    xhr.open("POST","/post/vote", true);
+    xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send('number='+postID+"&value=False");
+}
+
+</script>
+
+<script>
+
+function reply_reveal(pid){
+    document.getElementById("pf"+pid).style.display = 'flex';
+    document
+}
+</script>
+
+{% endblock content %}

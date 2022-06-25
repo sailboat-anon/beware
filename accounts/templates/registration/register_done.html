@@ -1,0 +1,17 @@
+{% extends "Page_template.html" %}
+
+{% block title %}Registeration Complete{% endblock %}
+
+{% block content %}
+<center>
+<h1>Thank you for registering!</h1>
+<p>You should receive a confirmation email shortly, I'm sure... <a href="{% url 'login' %}">Login</a></p>
+</center>
+
+<script>
+document.getElementById("about").innerHTML="";
+document.getElementById("contact").innerHTML="";
+</script>
+{% endblock content%}
+
+<!-- TODO: redirect to homepage -->

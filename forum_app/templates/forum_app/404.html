@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>/b/eware</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'forum_app/css/style.css' %}">
+    <link rel="icon" href="{% static 'forum_app/img/favicon.ico' %}">
+</head>
+<body>
+	<div class="container">
+		<h1 class="center">404</h1>
+		<div class="center">
+			<p>
+				The page you were looking for: 				
+				<span class="path">{{path}}</span>
+				was not found. <a href="/b/">Go Back</a>
+			</p>
+			<img src="{% static 'forum_app/img/404.png' %}" alt="akarin~">
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Browse Assignments{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ static }}/assets/beware.css">
+{% endblock head %}
+{% block content %}
+{% block style %}
+.assignment_box {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    width: 100%;
+}
+{% endblock style %}
+
+    <div id="main">
+        {% for a in assignment %}
+        <div style="assignment_box">
+            <div> <p>Placeholder</p>{{ a.task.name }} </div>
+            <div> {{ a.task.summary }} </div>
+            <div> {{ a.task.location }} </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+
+
+
+
+{% endblock content%}

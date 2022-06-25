@@ -1,0 +1,456 @@
+{% load static %}
+<html>
+<head>
+<title>{% block title %}{% endblock title%} - [beware]</title>
+    <meta name="keywords" content="{% block keywords %}{% endblock keywords %}"/>
+    <meta name="description" content="{% block description %}{% endblock description %}"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
+<style>
+html, body {
+    height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Consolas, monaco, monospace;
+  background-color: rgb(33,33,33);
+  background-image: url('/static/bg.png');
+  background-attachment: fixed;
+  color: white;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.333); 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(154,154,154,0.166); 
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(216,216,216,0.216); 
+}
+ul {
+    list-style-type:none;
+}
+
+#logo {margin-left: auto;
+padding-left: 30px;}
+nav {
+    display: flex;
+    background-color: black;
+    height: 54px;
+    width: 100%;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    position: sticky;
+    z-index: 420;
+}
+
+.sinput {
+    color: white;
+    width: inherit;
+    font-size: 14px;
+    padding: 10px;
+    margin: auto;
+    margin-left: 17px;
+    border-radius: 8px;
+    border:0px;
+    outline:0px;
+    top: 0px;
+    background-color: rgba(216,216,216,0.1);
+    }
+.sinput:focus {
+}
+.mobile-sinput {
+    color: white;
+    width: 80%;
+    font-size: 14px;
+    padding: 10px;
+    margin: auto;
+    border-radius: 8px;
+    border:0px;
+    outline:0px;
+    top: 0px;
+    background-color: rgba(216,216,216,0.1);
+    }
+
+.nav {
+margin-top: 0px;
+top: 0px;
+  margin-left: auto;
+  padding-right: 54px;
+flex-direction: row;
+}
+
+.nav ul{
+margin-top: 0px;
+top: 0px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+}
+.nav ul li {
+    padding-left: 26px;
+}
+.nav ul li a {
+    color: grey;
+    text-decoration: none;
+}
+.nav ul li a:hover {
+    color: white;
+    text-decoration: underline;
+}
+.nav ul li a div{
+    margin-top: 7px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav ul li a div p{
+margin-top: 56px;
+font-size: 14px;
+text-align: center;
+}
+
+.vl {
+  border-left: 1px solid grey;
+  height: 32px;
+  margin-top: 11px;
+}
+
+
+
+.explore {
+        width: 26px;
+        height: 26px;
+        background: url("/static/navbar/explore0.png") no-repeat;
+        background-size: contain;
+}
+.explore:hover {
+        background: url("/static/navbar/explore1.png") no-repeat;
+                background-size: contain;
+    }
+.news {
+        width: 26px;
+        height: 26px;
+        background: url("/static/navbar/news0.png") no-repeat;
+        background-size: contain;
+}
+.news:hover {
+        background: url("/static/navbar/news1.png") no-repeat;
+                background-size: contain;
+    }
+.profile {
+  background: url("{{user.profile.photo}}") no-repeat;
+  width: 33px;
+  height: 33px;
+  background-size: contain;
+  border-radius: 50%;
+  margin-top: 2px;
+}
+.home {
+        width: 26px;
+        height: 26px;
+        background: url("/static/navbar/home0.png") no-repeat;
+        background-size: contain;
+}
+.home:hover {
+        background: url("/static/navbar/home1.png") no-repeat;
+                background-size: contain;
+    }
+
+.mobhome:hover div{
+        background: url("/static/navbar/home1.png") no-repeat;
+        background-size: contain;
+}
+.mobexplore:hover div{
+        background: url("/static/navbar/explore1.png") no-repeat;
+        background-size: contain;
+}
+.mobnews:hover div{
+        background: url("/static/navbar/news1.png") no-repeat;
+        background-size: contain;
+}
+.telegram {
+        width: 26px;
+        height: 26px;
+        background: url("/static/navbar/telegram0.png") no-repeat;
+        background-size: contain;
+}
+.telegram:hover {
+        background: url("/static/navbar/telegram1.png") no-repeat;
+                background-size: contain;
+}
+.youtube {
+        width: 26px;
+        height: 26px;
+        background: url("/static/navbar/yt0.png") no-repeat;
+        background-size: contain;
+}
+.youtube:hover {
+        background: url("/static/navbar/yt1.png") no-repeat;
+                background-size: contain;
+}
+.twitter {
+        width: 26px;
+        height: 26px;
+        background: url("/static/navbar/twitter0.png") no-repeat;
+        background-size: contain;
+}
+.twitter:hover {
+        background: url("/static/navbar/twitter1.png") no-repeat;
+                background-size: contain;
+}
+
+footer {
+    clear: both;
+    position: relative;
+    display: block;
+    background-color: rgba(0,0,0,0.6);
+    border-top: 1px solid grey;
+    height: 54px;
+    margin-top: -54px;
+    width: 100%;
+}
+.footsy {
+    display: block;
+    }
+.footsy ul {
+    margin-top: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+.footsy ul li {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.footsy ul li a {
+    color: grey;
+    text-decoration: none;
+}
+.footsy ul li a:hover {
+    color: white;
+    text-decoration: underline;
+}
+.footsy ul li a div{
+    margin-top: 0px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footsy ul li a div p{
+margin-top: 54px;
+font-size: 14px;
+text-align: center;
+}
+.push {
+    height: 54px;
+}
+
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -54px;
+}
+.wrapper:after {
+    display: block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+    background-color: rgba(0,0,0,0.69);
+    backdrop-filter: blur(1px);
+    margin-left: -102px;
+    margin-top: 7px;
+	min-width: 154px;
+	z-index: 999;
+    border-radius: 7px;}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.dropdown-content a:hover {}
+
+.show {display:block;}
+
+.dropbtn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+}
+#mobilenav {
+  overflow: hidden;
+  background-color: black;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 54px;
+  display: none;
+}
+#mobilenav ul {
+  display: table;
+  width: 100%;
+  list-style: none;
+  margin-top: 6px;
+flex-direction: row;
+justify-content: center;
+}
+#mobilenav ul li {
+  display: table-cell;
+  text-align: center;
+  justify-content: center;
+  margin: auto;
+}
+#mobilenav ul li a{
+height: 100%;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+padding: 0;
+}
+#mobilenav ul li a div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#mobile-search-container{display: none;
+width: 100%;
+flex-direction: row;
+justify-content: center;}
+#search-container{display: flex;
+width: 100%;
+flex-direction: row;
+justify-content: center;}
+.mobilesearch {}
+#mobiletopnav{display: none;}
+/* max-device-width for device specific */
+@media only screen and (max-width: 942px) {
+#search-container{display: none;}
+.nav{display:none;}
+#mobilenav{display: block;}
+#mobiletopnav{display: block;
+margin-left: auto;
+margin-right: 17px;}
+}
+
+</style>
+</head>
+<body style="height: 100%; min-height: 100%;">
+    <nav>
+        <a href="{% url 'home' %}" style="">
+        <div id="logo">
+            <video height="54" autoplay loop muted playsinline style="pointer-events: none;">
+              <source src="{% static 'Logo.webm' %}" type="video/webm">
+            </video>
+        </div></a>
+        <div id="search-container">
+            <form action="/search" method="POST" style="display: flex; flex-direction: row; width: 100%; height: 54px; margin-bottom: 0px;">
+            {% csrf_token %}
+            <input class="sinput" type="text" placeholder="Give me your thoughts... Please?" name="word"/>
+            <button type="submit" style="background: none; border: none; margin-left: auto; cursor: pointer; outline: none;">
+            <img src="{% static 'searchico.png' %}" style="height: 33px; margin: auto;"/></button>
+            </form>
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="/home"><div class="home"><p>Home</p></div></a></li>
+                <li><a href="#"><div class="explore"><p>Explore</p></div></a></li>
+                <li><a href="/news"><div class="news"><p>News</p></div></a></li>
+                <li><div class="vl"></div></li>
+                <li><div class="dropdown"><button onclick="DropDown()" class="dropbtn"><img class="dropbtn" src="{{user.profile.photo}}" style="border-radius: 50%; height: 42px; width: 42px; margin-top: 6px;"/></button>
+                <div id="DropDown" class="dropdown-content">
+                    <a href="/account">Dashboard</a>
+                    <a href="/account/settings">Settings</a>
+                    <a href="/logout">Log-out</a>
+                </div>
+                </li>
+            </ul>
+        </div>
+        <div id="mobiletopnav">
+          <div><button onclick="searchbar();" class="mobilesearch" style="background: none; border: none; cursor: pointer;">
+              <img src="{% static 'searchico.png' %}" style="height: 33px; margin-top: 11px;"/>
+          </button>
+          </div>
+          
+        </div>
+        <div id="mobile-search-container">
+            <form action="/search" method="POST" style="display: flex; flex-direction: row; width: 100%; height: 54px; margin-bottom: 0px;">
+            {% csrf_token %}
+            <input class="mobile-sinput" type="text" placeholder="Give me your thoughts... Please?" name="text"/>
+            <button type="submit" style="background: none; border: none; margin-left: auto; cursor: pointer; outline: none;">
+            <img src="{% static 'searchico.png' %}" style="height: 33px; margin: auto;"/></button>
+            </form>
+        </div>
+    </nav>
+<div class="wrapper">
+{% block content %}
+{% endblock content %}
+<div id="mobilenav">
+<ul>
+  <li><a href="/home" class="mobhome"><div class="home"></div></a></li>
+  <li><a href="#explore" class="mobexplore"><div class="explore"></div></a></li>
+  <li><a href="/news" class="mobnews"><div class="news"></div></a></li>
+  <li><a href="/account/" class="mobprofile"><div class="profile"></div></a></li>
+</ul>
+</div>
+<div class="push"></div>
+</div>
+
+</body>
+<script>
+function DropDown() {
+  document.getElementById("DropDown").classList.toggle("show");
+}
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+<script>
+function searchbar() {
+  var nav = document.getElementById("mobiletopnav");
+  var logo = document.getElementById("logo")
+  var sbar = document.getElementById("search-container")
+
+  nav.style.display = 'none';
+  logo.style.display = 'none';
+  sbar.style.display = 'flex';
+}
+</script>
+</html>
